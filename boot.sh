@@ -86,6 +86,8 @@ mkdir -p "${state}"
 touch $state/metadata.json
 if [ -n "${kubeadm_data}" ] ; then
     echo "{  \"kubeadm\": { \"entries\": { ${kubeadm_data} } } }" > $state/metadata.json
+else
+    echo "{ }" > $state/metadata.json
 fi
 
 linuxkit run ${KUBE_RUN_ARGS} -networking ${KUBE_NETWORKING} -cpus ${KUBE_VCPUS} -mem ${KUBE_MEM} -state "${state}" -disk size=${KUBE_DISK} -data $state/metadata.json ${uefi} "${img}${suffix}"
